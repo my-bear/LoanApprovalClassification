@@ -1,0 +1,51 @@
+## Конфигурация моделей
+# Основные настройки
+name: "catboost_classifier"
+task: "classification"  # classification, regression, clustering
+
+# Тип модели
+type: "tree"  # tree, linear, neural_net, ensemble
+library: "catboost"  # sklearn, xgboost, lightgbm, catboost, pytorch
+
+# Гиперпараметры модели
+hyperparameters:
+  # CatBoost параметры
+  catboost:
+    iterations: 767
+    learning_rate: 0.0892531583215235
+    depth: 5
+    l2_leaf_reg: 1
+    border_count: 254
+    random_strength: 18
+    grow_policy: "Lossguide"
+    bootstrap_type: "Bayesian"
+    loss_function: "Logloss"
+    eval_metric: "F1"
+    verbose: false
+    random_seed: 42
+    thread_count: 10
+    early_stopping_rounds: 20
+    auto_class_weights: "Balanced"
+    task_type: "GPU"
+    cat_features: [7, 8, 9, 10, 11]
+    
+# Настройки обучения
+training:
+  cv_strategy: "stratified_kfold"  # kfold, stratified_kfold, timeseries, none
+  n_folds: 5
+  early_stopping_rounds: 10
+  verbose: true
+  use_gpu: false
+  
+# Настройки валидации
+validation:
+  metrics:
+    - "f1"
+    - "precision"
+    - "recall"
+    - "roc_auc"
+  
+# Сохранение модели
+save:
+  format: "pickle"  # joblib, pickle, onnx, torch
+  directory: "models"
